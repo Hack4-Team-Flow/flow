@@ -6,6 +6,7 @@ public class Store {
     public double duration;
 
     public Store(double Latitude,double Longitude,double price, String businessType,double duration) {
+
         this.price=price;
         this.businessType=businessType;
         this.duration=duration;
