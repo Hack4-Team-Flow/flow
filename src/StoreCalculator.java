@@ -1,8 +1,8 @@
 public class StoreCalculator {
-    public static int closestStoreIndex=-1;
-    public static Store[] stores;
-    public static double[] distances;
-    public static double[] location;
+    public int closestStoreIndex=-1;
+    public Store[] stores;
+    public double[] distances;
+    public double[] location;
 
     public StoreCalculator(Store[] stores, double[] location) {
         this.stores = stores;
@@ -16,7 +16,7 @@ public class StoreCalculator {
         }
 
     }
-    public static void arrangeDistances(){
+    public void arrangeDistances(){
         int index=0;
         for(Store s:stores){
             double storeLatitude=s.getLatitude();
@@ -26,7 +26,7 @@ public class StoreCalculator {
             index++;
         }
     }
-    public static double calculateDistance(double lat1, double lat2, double lon1,
+    public double calculateDistance(double lat1, double lat2, double lon1,
                                   double lon2, double el1, double el2) {
 
         final int R = 6371; // Radius of the earth
@@ -45,7 +45,7 @@ public class StoreCalculator {
 
         return Math.sqrt(distance);
     }
-    public static void findClosest(int index){
+    public void findClosest(int index){
         double minValue = distances[0];
         for(int i=1;i<distances.length;i++){
             if(distances[i] < minValue && closestStoreIndex!=index){
@@ -54,7 +54,7 @@ public class StoreCalculator {
             }
         }
     }
-    public static double calculateDuration(){
+    public double calculateDuration(){
         double speed=50.00;
         return (distances[closestStoreIndex]/speed)/60.00;
     }
