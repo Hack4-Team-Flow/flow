@@ -14,18 +14,19 @@ public class StoreCalculator {
                 findClosest(closestStoreIndex);
             }
         }
+
     }
     public static void arrangeDistances(){
         int index=0;
         for(Store s:stores){
             double storeLatitude=s.getLatitude();
             double storeLongitude=s.getLongitude();
-            double distance=distance(location[0],storeLatitude,location[1],storeLongitude,0.00,0.00);
+            double distance=calculateDistance(location[0],storeLatitude,location[1],storeLongitude,0.00,0.00);
             distances[index]=distance;
             index++;
         }
     }
-    public static double distance(double lat1, double lat2, double lon1,
+    public static double calculateDistance(double lat1, double lat2, double lon1,
                                   double lon2, double el1, double el2) {
 
         final int R = 6371; // Radius of the earth
@@ -55,6 +56,6 @@ public class StoreCalculator {
     }
     public static double calculateDuration(){
         double speed=50.00;
-        return stores[closestStoreIndex].getDuration()/speed;
+        return (distances[closestStoreIndex]/speed)/60.00;
     }
 }
