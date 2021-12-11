@@ -3,6 +3,7 @@ public class StoreCalculator {
     public Store[] stores;
     public double[] distances;
     public double[] location;
+    public int travelTimeToOrder;
 
     public StoreCalculator(Store[] stores, double[] location) {
         this.stores = stores;
@@ -14,7 +15,7 @@ public class StoreCalculator {
                 findClosest(closestStoreIndex);
             }
         }
-
+        travelTimeToOrder= (int) (calculateDuration()-stores[closestStoreIndex].getDuration());
     }
     public void arrangeDistances(){
         int index=0;
@@ -57,5 +58,9 @@ public class StoreCalculator {
     public double calculateDuration(){
         double speed=50.00;
         return (distances[closestStoreIndex]/speed)/60.00;
+    }
+
+    public int getTravelTimeToOrder() {
+        return travelTimeToOrder;
     }
 }
