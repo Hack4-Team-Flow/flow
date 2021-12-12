@@ -33,4 +33,15 @@ public class Store {
     public double getDuration() {
         return duration;
     }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "Latitude=" + Latitude +
+                ", Longitude=" + Longitude +
+                ", price=" + price +
+                ", businessType='" + businessType + '\'' +
+                ", duration=" + duration +
+                '}';
+    }
 }
