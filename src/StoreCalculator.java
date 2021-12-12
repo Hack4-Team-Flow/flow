@@ -20,8 +20,8 @@ public class StoreCalculator {
         indexlist=new ArrayList<>(Arrays.asList(indexes));
         arrangeDistances();
         findClosest();
-        if(stores[closestStoreIndex].getDuration()>calculateDuration()||foodType!=stores[closestStoreIndex].getBusinessType()){
-            while(stores[closestStoreIndex].getDuration()>calculateDuration()||foodType!=stores[closestStoreIndex].getBusinessType()){
+        if(stores[closestStoreIndex].getDuration()>calculateDuration()){
+            while(stores[closestStoreIndex].getDuration()>calculateDuration()){
                 indexlist.add(closestStoreIndex);
                 findClosest();
 

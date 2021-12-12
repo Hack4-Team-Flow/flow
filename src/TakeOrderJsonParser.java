@@ -24,15 +24,15 @@ public class TakeOrderJsonParser {
 
     public TakeOrderJsonParser() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://127.0.0.1:5000/stores"))
+                .uri(URI.create("http://127.0.0.1:5000/takeorder"))
                 //.header("content-type", "application/json")
                 //.header("x-rapidapi-host", "distance-calculator.p.rapidapi.com")
                 //.header("x-rapidapi-key", "26956441a4mshc9c2756fdf42cd7p1c723ejsn350adb6e0848")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        //System.out.println(response.body());
-        jsonConverter(response.body().substring(1,response.body().length()-2));
+        System.out.println(response.body());
+        jsonConverter(response.body());
     }
 
     /*public static void communicate() throws IOException, InterruptedException {

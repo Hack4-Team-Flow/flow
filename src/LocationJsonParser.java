@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class LocationJsonParser {
 
-    public static double[] Locations;
+    public static double[] Locations=new double[2];
 
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
@@ -31,8 +31,8 @@ public class LocationJsonParser {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        //System.out.println(response.body());
-        jsonConverter(response.body().substring(1,response.body().length()-2));
+        System.out.println(response.body());
+        jsonConverter(response.body());
     }
 
     /*public static void communicate() throws IOException, InterruptedException {
@@ -73,10 +73,16 @@ public class LocationJsonParser {
         return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
     public static void jsonConverter(String json){
+        System.out.println(json);
+
         JSONObject obj = new JSONObject(json);
-        JSONArray arr = obj.getJSONArray("Location");
-        Locations[0] = arr.getJSONObject(0).getDouble("latitude");
-        Locations[1] = arr.getJSONObject(0).getDouble("longtitude");
+        System.out.println(obj.toString());
+        JSONArray arr = obj.getJSONArray("location");
+        System.out.println(arr.toString());
+        double latitude = arr.getJSONObject(0).getDouble("latitude");
+        double longitude = arr.getJSONObject(0).getDouble("longtitude");
+        Locations[0]=latitude;
+        Locations[1]=longitude;
 
     }
 

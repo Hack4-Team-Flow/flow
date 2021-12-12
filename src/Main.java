@@ -31,7 +31,7 @@ public class Main {
         String drink="";
         String foodType="";
         TakeOrderJsonParser takeOrderJsonParser=null;
-        while(takeOrderJsonParser==null){
+        while(foodKind!=""){
             try{
                 takeOrderJsonParser =new TakeOrderJsonParser();
                 foodKind=takeOrderJsonParser.getFoodKind();
@@ -44,7 +44,7 @@ public class Main {
 
         StoreCalculator storeCalculator=new StoreCalculator(stores,location,foodType);
         System.out.println(storeCalculator.getTravelTimeToOrder());
-        TimeUnit.MINUTES.sleep((long) storeCalculator.getTravelTimeToOrder());
+        TimeUnit.SECONDS.sleep((long) storeCalculator.getTravelTimeToOrder());
         StoreOrder storeOrder=new StoreOrder(foodKind,drink);
 
     }

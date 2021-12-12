@@ -34,7 +34,7 @@ public class StoreJsonParser {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        //System.out.println(response.body());
+        System.out.println(response.body());
         jsonConverter(response.body().substring(1,response.body().length()-2));
     }
 
