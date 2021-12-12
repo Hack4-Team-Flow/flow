@@ -10,21 +10,21 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.Map;
 
-public class LocationJsonParser {
-
-    public static double[] Locations;
+public class TakeOrderJsonParser {
+    public static String foodType;
+    public static String foodKind;
+    public static String drink;
 
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
-    public LocationJsonParser() throws IOException, InterruptedException {
+    public TakeOrderJsonParser() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://127.0.0.1:5000/location"))
+                .uri(URI.create("http://127.0.0.1:5000/stores"))
                 //.header("content-type", "application/json")
                 //.header("x-rapidapi-host", "distance-calculator.p.rapidapi.com")
                 //.header("x-rapidapi-key", "26956441a4mshc9c2756fdf42cd7p1c723ejsn350adb6e0848")
@@ -74,13 +74,21 @@ public class LocationJsonParser {
     }
     public static void jsonConverter(String json){
         JSONObject obj = new JSONObject(json);
-        JSONArray arr = obj.getJSONArray("Location");
-        Locations[0] = arr.getJSONObject(0).getDouble("latitude");
-        Locations[1] = arr.getJSONObject(0).getDouble("longtitude");
-
+        JSONArray arr = obj.getJSONArray("takeorder");
+        foodKind= arr.getJSONObject(0).getString("foodKind");
+        foodType= arr.getJSONObject(0).getString("foodType");
+        drink= arr.getJSONObject(0).getString("drink");
     }
 
-    public static double[] getLocations() {
-        return Locations;
+    public static String getFoodType() {
+        return foodType;
+    }
+
+    public static String getFoodKind() {
+        return foodKind;
+    }
+
+    public static String getDrink() {
+        return drink;
     }
 }

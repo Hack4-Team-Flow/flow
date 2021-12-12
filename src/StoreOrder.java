@@ -1,4 +1,3 @@
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,46 +12,34 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LocationJsonParser {
-
-    public static double[] Locations;
+public class StoreOrder {
 
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
-    public LocationJsonParser() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://127.0.0.1:5000/location"))
-                //.header("content-type", "application/json")
-                //.header("x-rapidapi-host", "distance-calculator.p.rapidapi.com")
-                //.header("x-rapidapi-key", "26956441a4mshc9c2756fdf42cd7p1c723ejsn350adb6e0848")
-                .method("GET", HttpRequest.BodyPublishers.noBody())
+    public StoreOrder(String foodKind,String drink) throws IOException, InterruptedException {
+
+        Map<Object, Object> data = new HashMap<>();
+        data.put("foodKind", foodKind);
+        data.put("drink", drink);
+
+        HttpRequest request1 = HttpRequest.newBuilder()
+                .POST(ofFormData(data))
+                .uri(URI.create("http://127.0.0.1:5000/setorder"))
+                //.setHeader("User-Agent", "Java 11 HttpClient Bot") // add request header
+                //.header("Content-Type", "application/x-www-form-urlencoded")
                 .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        //System.out.println(response.body());
-        jsonConverter(response.body().substring(1,response.body().length()-2));
+
+        HttpResponse<String> response1 = httpClient.send(request1, HttpResponse.BodyHandlers.ofString());
     }
 
     /*public static void communicate() throws IOException, InterruptedException {
 
 
 
-        Map<Object, Object> data = new HashMap<>();
-        data.put("username", "abc");
-        data.put("password", "123");
-        data.put("custom", "secret");
-        data.put("ts", System.currentTimeMillis());
 
-        HttpRequest request1 = HttpRequest.newBuilder()
-                .POST(ofFormData(data))
-                .uri(URI.create("http://127.0.0.1:5000/takeorder"))
-                //.setHeader("User-Agent", "Java 11 HttpClient Bot") // add request header
-                //.header("Content-Type", "application/x-www-form-urlencoded")
-                .build();
-
-        HttpResponse<String> response1 = httpClient.send(request1, HttpResponse.BodyHandlers.ofString());
 
         // print status code
         System.out.println(response1.statusCode());
@@ -72,15 +59,6 @@ public class LocationJsonParser {
         }
         return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
-    public static void jsonConverter(String json){
-        JSONObject obj = new JSONObject(json);
-        JSONArray arr = obj.getJSONArray("Location");
-        Locations[0] = arr.getJSONObject(0).getDouble("latitude");
-        Locations[1] = arr.getJSONObject(0).getDouble("longtitude");
 
-    }
 
-    public static double[] getLocations() {
-        return Locations;
-    }
 }

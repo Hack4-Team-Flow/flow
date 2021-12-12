@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -24,12 +25,19 @@ public class Main {
             stores[i]=new Store(StoreJsonParser.getNames()[i],StoreJsonParser.getLatitudes()[i],StoreJsonParser.getLongtitudes()[i],StoreJsonParser.getPrices()[i],StoreJsonParser.getBusinessTypes()[i],StoreJsonParser.getDurations()[i] );
         }
         double[]location=new double[2];
-        location[0]=36.9159143629179;
-        location[1]=30.804464229398153;
-        StoreCalculator storeCalculator=new StoreCalculator(stores,location);
+        LocationJsonParser locationJsonParser=new LocationJsonParser();
+        location=locationJsonParser.getLocations();
+        String foodKind;
+        String drink;
+        String foodType;
+        TakeOrderJsonParser takeOrderJsonParser=new TakeOrderJsonParser();
+        foodKind=takeOrderJsonParser.getFoodKind();
+        foodType=takeOrderJsonParser.getFoodType();
+        drink= takeOrderJsonParser.getDrink();
+        StoreCalculator storeCalculator=new StoreCalculator(stores,location,foodType);
         System.out.println(storeCalculator.getTravelTimeToOrder());
-
-
+        TimeUnit.MINUTES.sleep((long) storeCalculator.getTravelTimeToOrder());
+        StoreOrder storeOrder=new StoreOrder(foodKind,drink);
 
     }
 

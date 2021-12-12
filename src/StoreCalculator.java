@@ -10,8 +10,9 @@ public class StoreCalculator {
     public double travelTimeToOrder;
     public Integer[] indexes;
     List<Integer> indexlist;
-    public StoreCalculator(Store[] stores, double[] location) {
-
+    public static String foodType;
+    public StoreCalculator(Store[] stores, double[] location,String foodType) {
+        this.foodType=foodType;
         this.stores = stores;
         this.location = location;
         distances=new double[stores.length];
