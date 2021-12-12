@@ -19,33 +19,14 @@ public class StoreCalculator {
         indexlist=new ArrayList<>(Arrays.asList(indexes));
         arrangeDistances();
         findClosest(indexes);
-        int count=0;
-        System.out.println("BEFORE WHİLE closest: "+closestStoreIndex+" store duration: "+stores[closestStoreIndex].getDuration()+" calculated duration to the store: "+calculateDuration()+" distance: "+distances[closestStoreIndex]);
         if(stores[closestStoreIndex].getDuration()>calculateDuration()){
             while(stores[closestStoreIndex].getDuration()>calculateDuration()){
-                System.out.println("WHEN FIRST ENTERED THE WHILE closest: "+closestStoreIndex+" store duration: "+stores[closestStoreIndex].getDuration()+" calculated duration to the store: "+calculateDuration()+" distance: "+distances[closestStoreIndex]);
-                indexes[count]=closestStoreIndex;
+                indexlist.add(closestStoreIndex);
                 findClosest(indexes);
-                System.out.println("AFTER FIND closest: "+closestStoreIndex+" store duration: "+stores[closestStoreIndex].getDuration()+" calculated duration to the store: "+calculateDuration()+" distance: "+distances[closestStoreIndex]);
-                if(count>15){
-                    while (true){
 
-                    }
-                }
-                count++;
             }
         }
-        count=0;
-        for(Double d:distances){
-            System.out.print(d);
-            System.out.println("    "+stores[count].toString());
-            count++;
-        }/*
-        System.out.println(closestStoreIndex);
-        System.out.println(stores[closestStoreIndex].toString());
-        System.out.println(calculateDuration());*/
-
-        travelTimeToOrder= (stores[closestStoreIndex].getDuration()-calculateDuration());
+        travelTimeToOrder= (calculateDuration()-stores[closestStoreIndex].getDuration());
     }
     public void arrangeDistances(){
         int index=0;
@@ -81,17 +62,13 @@ public class StoreCalculator {
         while(indexlist.contains(i)){
             i++;
         }
-        System.out.println("index: "+i);
         double minValue = distances[i];
         for(;i<distances.length;i++){
-            System.out.println(minValue);
-            if(distances[i] < minValue && !indexlist.contains(i)){
+            if(distances[i] <= minValue && !indexlist.contains(i)){
                 minValue = distances[i];
                 closestStoreIndex=i;
-                System.out.println(closestStoreIndex);
             }
         }
-        System.out.println("FIND BITTI ");
     }
     public double calculateDuration(){
         double speed=50.00;

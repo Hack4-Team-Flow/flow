@@ -4,9 +4,9 @@ public class Store {
     public double price;
     public String businessType;
     public double duration;
-
-    public Store(double Latitude,double Longitude,double price, String businessType,double duration) {
-
+    public String name;
+    public Store(String name,double Latitude,double Longitude,double price, String businessType,double duration) {
+        this.name=name;
         this.price=price;
         this.businessType=businessType;
         this.duration=duration;
