@@ -1,3 +1,7 @@
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -7,26 +11,20 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import org.json.*;
-import org.apache.commons.lang3.StringUtils;
 
-public class JsonParser {
-    public static String[] names;
-    public static double[] durations;
-    public static double[] latitudes ;
-    public static double[] longtitudes;
-    public static int[] prices;
-    public static String[] businessTypes;
+public class LocationJsonParser {
+
+    public static double[] Locations;
+
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
-    public JsonParser() throws IOException, InterruptedException {
+    public LocationJsonParser() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://127.0.0.1:5000/stores"))
+                .uri(URI.create("http://127.0.0.1:5000/Location"))
                 //.header("content-type", "application/json")
                 //.header("x-rapidapi-host", "distance-calculator.p.rapidapi.com")
                 //.header("x-rapidapi-key", "26956441a4mshc9c2756fdf42cd7p1c723ejsn350adb6e0848")
@@ -37,7 +35,7 @@ public class JsonParser {
         jsonConverter(response.body().substring(1,response.body().length()-2));
     }
 
-    public static void communicate() throws IOException, InterruptedException {
+    /*public static void communicate() throws IOException, InterruptedException {
 
 
 
@@ -61,7 +59,7 @@ public class JsonParser {
 
         // print response body
         System.out.println(response1.body());
-    }
+    }*/
     public static HttpRequest.BodyPublisher ofFormData(Map<Object, Object> data) {
         var builder = new StringBuilder();
         for (Map.Entry<Object, Object> entry : data.entrySet()) {
@@ -75,66 +73,14 @@ public class JsonParser {
         return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
     public static void jsonConverter(String json){
-        //System.out.println(json);
-        int lenght=StringUtils.countMatches(json, "store");
-        names=new String[lenght];
-        durations=new double[lenght];
-        latitudes=new double[lenght];
-        longtitudes=new double[lenght];
-        prices=new int[lenght];
-        businessTypes=new String[lenght];
-
-        for(int j=0;j<lenght;j++){
-            JSONObject obj = new JSONObject(json);
-            if(j==0){
-                json=json.substring(obj.toString().length()+1);
-            }if(j!=lenght-1&&j!=0){
-                json=json.substring(obj.toString().length()+1);
-            }
-            //System.out.println(json);
-            //System.out.println(obj.toString());
-            JSONArray arr = obj.getJSONArray("store");
-
-            for (int i = 0; i < arr.length(); i++) {
-                names[j] = arr.getJSONObject(i).getString("name");
-                durations[j] = arr.getJSONObject(i).getDouble("duration");
-                latitudes[j] = arr.getJSONObject(i).getDouble("latitude");
-                longtitudes[j] = arr.getJSONObject(i).getDouble("longtitude");
-                prices[j] = arr.getJSONObject(i).getInt("price");
-                businessTypes [j]= arr.getJSONObject(i).getString("businessType");
-                /*System.out.print("name :"+name);
-                System.out.print(" duration: "+duration);
-                System.out.print(" latitude: "+latitude);
-                System.out.print(" longtitude: "+longtitude);
-                System.out.print(" price: "+price);
-                System.out.println(" businessType: "+businessType);*/
-            }
-        }
-
+        JSONObject obj = new JSONObject(json);
+        JSONArray arr = obj.getJSONArray("Locations");
+        Locations[0] = arr.getJSONObject(0).getDouble("latitude");
+        Locations[1] = arr.getJSONObject(0).getDouble("longtitude");
 
     }
 
-    public static String[] getNames() {
-        return names;
-    }
-
-    public static double[] getDurations() {
-        return durations;
-    }
-
-    public static double[] getLatitudes() {
-        return latitudes;
-    }
-
-    public static double[] getLongtitudes() {
-        return longtitudes;
-    }
-
-    public static int[] getPrices() {
-        return prices;
-    }
-
-    public static String[] getBusinessTypes() {
-        return businessTypes;
+    public static double[] getLocations() {
+        return Locations;
     }
 }
