@@ -27,13 +27,21 @@ public class Main {
         double[]location=new double[2];
         LocationJsonParser locationJsonParser=new LocationJsonParser();
         location=locationJsonParser.getLocations();
-        String foodKind;
-        String drink;
-        String foodType;
-        TakeOrderJsonParser takeOrderJsonParser=new TakeOrderJsonParser();
-        foodKind=takeOrderJsonParser.getFoodKind();
-        foodType=takeOrderJsonParser.getFoodType();
-        drink= takeOrderJsonParser.getDrink();
+        String foodKind="";
+        String drink="";
+        String foodType="";
+        TakeOrderJsonParser takeOrderJsonParser=null;
+        while(takeOrderJsonParser==null){
+            try{
+                takeOrderJsonParser =new TakeOrderJsonParser();
+                foodKind=takeOrderJsonParser.getFoodKind();
+                foodType=takeOrderJsonParser.getFoodType();
+                drink= takeOrderJsonParser.getDrink();
+            }catch (Exception e){
+
+            }
+        }
+
         StoreCalculator storeCalculator=new StoreCalculator(stores,location,foodType);
         System.out.println(storeCalculator.getTravelTimeToOrder());
         TimeUnit.MINUTES.sleep((long) storeCalculator.getTravelTimeToOrder());
