@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import pandas as pd
 
 data_car_dict = {'location':[{'latitude': 36.9159143629179, 'longtitude': 30.804464229398153}]}
-order_detail = {}
+selected_order_type = {'takeorder':[{'food_type': 'Burger', 'food_kind': 'Mushroom', 'drink': 'Cola'}]}
 data_stores = [{'store':[{'name':'White Bakery', 'duration': 5, 'price':30, 'latitude':37.0202875421039, 'longtitude':30.5981990104282,'businessType':'bake'}]},
             {'store':[{'name':'McDonalds', 'duration':15, 'price':23, 'latitude':36.886827290282, 'longtitude':30.7025303036082,'businessType':'burger'}]},
             {'store':[{'name': 'Beach Bar', 'duration':45, 'price':55, 'latitude':36.6137941584317, 'longtitude':30.5610624029243,'businessType':'drink'}]},
@@ -16,22 +16,22 @@ app = Flask(__name__)
 def index():
     return "Welcome to our app"
 
-@app.route('/takeorder', methods = ['POST'])
+@app.route('/takeorder', methods = ['GET'])
 def post():
-    if request.method == 'POST':
-        return jsonify(order_detail)
+    if request.method == 'GET':
+        return jsonify(selected_order_type)
 
-@app.route('/stores', methods= ['POST'])
+@app.route('/stores', methods= ['GET'])
 def post_store():
-    if request.method == 'POST':
+    if request.method == 'GET':
         return jsonify(data_stores)
-@app.route('/location', methods = ['POST'])
+
+@app.route('/location', methods = ['GET'])
 def post_location():
-    if request.method == 'POST':
+    if request.method == 'GET':
         return jsonify(data_car_dict)
 
-def main(selected_order_type):
-    order_detail = selected_order_type
+def main():
     app.run()
 
 if __name__ == "__main__":

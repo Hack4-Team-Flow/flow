@@ -1,9 +1,6 @@
 import api
 
 
-engine = pyttsx3.init()
-
-selected_order_type = {'takeorder':[{'food_type': None, 'food_kind': None, 'drink': None}]}
 
 
 
@@ -23,7 +20,7 @@ def command_loop_food():
     command_loop_drink()
 
 def send_order_type():
-    api.main(selected_order_type)
+    api.main()
 
 
 if __name__ =="__main__":
