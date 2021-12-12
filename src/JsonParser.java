@@ -13,6 +13,12 @@ import org.json.*;
 import org.apache.commons.lang3.StringUtils;
 
 public class JsonParser {
+    public static String[] names;
+    public static double[] durations;
+    public static double[] latitudes ;
+    public static double[] longtitudes;
+    public static int[] prices;
+    public static String[] businessTypes;
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
@@ -71,6 +77,13 @@ public class JsonParser {
     public static void jsonConverter(String json){
         //System.out.println(json);
         int lenght=StringUtils.countMatches(json, "store");
+        names=new String[lenght];
+        durations=new double[lenght];
+        latitudes=new double[lenght];
+        longtitudes=new double[lenght];
+        prices=new int[lenght];
+        businessTypes=new String[lenght];
+
         for(int j=0;j<lenght;j++){
             JSONObject obj = new JSONObject(json);
             if(j==0){
@@ -83,13 +96,13 @@ public class JsonParser {
             JSONArray arr = obj.getJSONArray("store");
 
             for (int i = 0; i < arr.length(); i++) {
-                String name = arr.getJSONObject(i).getString("name");
-                double duration = arr.getJSONObject(i).getDouble("duration");
-                double latitude = arr.getJSONObject(i).getDouble("latitude");
-                double longtitude = arr.getJSONObject(i).getDouble("longtitude");
-                int price = arr.getJSONObject(i).getInt("price");
-                /*String businessType = arr.getJSONObject(i).getString("businessType");
-                System.out.print("name :"+name);
+                names[j] = arr.getJSONObject(i).getString("name");
+                durations[j] = arr.getJSONObject(i).getDouble("duration");
+                latitudes[j] = arr.getJSONObject(i).getDouble("latitude");
+                longtitudes[j] = arr.getJSONObject(i).getDouble("longtitude");
+                prices[j] = arr.getJSONObject(i).getInt("price");
+                businessTypes [j]= arr.getJSONObject(i).getString("businessType");
+                /*System.out.print("name :"+name);
                 System.out.print(" duration: "+duration);
                 System.out.print(" latitude: "+latitude);
                 System.out.print(" longtitude: "+longtitude);
@@ -99,5 +112,29 @@ public class JsonParser {
         }
 
 
+    }
+
+    public static String[] getNames() {
+        return names;
+    }
+
+    public static double[] getDurations() {
+        return durations;
+    }
+
+    public static double[] getLatitudes() {
+        return latitudes;
+    }
+
+    public static double[] getLongtitudes() {
+        return longtitudes;
+    }
+
+    public static int[] getPrices() {
+        return prices;
+    }
+
+    public static String[] getBusinessTypes() {
+        return businessTypes;
     }
 }
