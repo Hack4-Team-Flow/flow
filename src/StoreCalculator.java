@@ -18,11 +18,11 @@ public class StoreCalculator {
         indexes=new Integer[stores.length];
         indexlist=new ArrayList<>(Arrays.asList(indexes));
         arrangeDistances();
-        findClosest(indexes);
+        findClosest();
         if(stores[closestStoreIndex].getDuration()>calculateDuration()){
             while(stores[closestStoreIndex].getDuration()>calculateDuration()){
                 indexlist.add(closestStoreIndex);
-                findClosest(indexes);
+                findClosest();
 
             }
         }
@@ -57,7 +57,7 @@ public class StoreCalculator {
 
         return Math.sqrt(distance);
     }
-    public void findClosest(Integer[] index){
+    public void findClosest(){
         int i=0;
         while(indexlist.contains(i)){
             i++;

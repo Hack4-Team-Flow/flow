@@ -6,12 +6,12 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-public class main {
+public class Main {
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
             .build();
-    public static void main(String[] Args) throws IOException, InterruptedException {
+    public static void main(String[] Args){
         Store[] stores=new Store[6];
         Store store1=new Store("White bakery",37.02028754,30.59819901,30,"bake",5.00);
         stores[0]=store1;
